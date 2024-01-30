@@ -12,11 +12,13 @@ public interface HissedarlarService {
     Hissedarlar saveHissedar(Hissedarlar hissedar);
     Hissedarlar updateHissedar(Hissedarlar hissedar);
 
-    // Hissedarlar hissedarEkle(HissedarAddModel hissedarAddModel);
-    // Hissedarlar hissedarGüncelle(HissedarUpdateModel hissedarUpdateModel);
+
     Optional<Hissedarlar> HissedarBul_Id(Long id);
     void hissedarSil(Long id);
     List<Hissedarlar> listHissedarlar();
+
+    // Hissedarlar hissedarEkle(HissedarAddModel hissedarAddModel);
+    // Hissedarlar hissedarGüncelle(HissedarUpdateModel hissedarUpdateModel);
 
 
 

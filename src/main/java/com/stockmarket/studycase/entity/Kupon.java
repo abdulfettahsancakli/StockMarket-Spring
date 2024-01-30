@@ -1,5 +1,8 @@
 package com.stockmarket.studycase.entity;
 import com.stockmarket.studycase.enums.KuponTuru;
+import com.stockmarket.studycase.enums.YatirimciTipi;
+import com.stockmarket.studycase.enums.converters.KuponTuruConverter;
+import com.stockmarket.studycase.enums.converters.YatirimciTipiConverter;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,7 +19,7 @@ public class Kupon {
     private String kupur_no;
     private int yil;
 
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = KuponTuruConverter.class)
     private KuponTuru kuponTuru;
 
     @ManyToOne

@@ -1,5 +1,8 @@
 package com.stockmarket.studycase.entity;
 import com.stockmarket.studycase.enums.IslemTipi;
+import com.stockmarket.studycase.enums.KuponTuru;
+import com.stockmarket.studycase.enums.converters.IslemTipiConverter;
+import com.stockmarket.studycase.enums.converters.KuponTuruConverter;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
@@ -11,7 +14,7 @@ public class Islemler {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = IslemTipiConverter.class)
     private IslemTipi islemTipi;
 
     @ManyToOne
