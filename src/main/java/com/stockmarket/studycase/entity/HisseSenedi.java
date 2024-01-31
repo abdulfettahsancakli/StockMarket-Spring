@@ -25,4 +25,18 @@ public class HisseSenedi {
     @ManyToOne
     @JoinColumn(name = "tertip_id")
     private Tertip tertip;
+
+    public void setHissedarId(Long hissedarId) {
+        if (this.hissedar == null) {
+            this.hissedar = new Hissedarlar();
+        }
+        this.hissedar.setId(hissedarId);
+    }
+
+    public void setTertipId(Long tertipId) {
+        if (this.tertip == null) {
+            this.tertip = new Tertip();
+        }
+        this.tertip.setTertip_id(tertipId);
+    }
 }

@@ -15,8 +15,8 @@ public class Kupon {
     private Long id;
 
     private boolean isUsed;
-    private String kupon_no;
-    private String kupur_no;
+    private Integer kupon_no;
+    private Integer kupur_no;
     private int yil;
 
     @Convert(converter = KuponTuruConverter.class)
