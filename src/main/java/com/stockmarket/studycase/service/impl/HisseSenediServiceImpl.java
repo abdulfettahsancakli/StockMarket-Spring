@@ -54,7 +54,6 @@ public class HisseSenediServiceImpl implements HisseSenediService {
     }
     @Override
     public void hisseSenediVer(Long hisseSenediId, Long hissedarId) {
-
         Optional<HisseSenedi> optionalHisseSenedi = hisseSenediRepository.findById(hisseSenediId);
         Optional<Hissedarlar> optionalHissedar = hissedarRepository.findById(hissedarId);
 
@@ -68,8 +67,7 @@ public class HisseSenediServiceImpl implements HisseSenediService {
 
             Tertip tertip = hisseSenedi.getTertip();
 
-            // Hisse senedine ait pay alma kuponlarını getir (1'den 16'ya kadar olanlar) ?
-            // payAlmaKuponlarına erişmem lazım
+            // Pay alma kuponlarını getir (1'den 16'ya kadar olanlar)
             List<Kupon> payAlmaKuponlar = kuponService.getKuponlarByHisseSenediId(hisseSenediId);
 
             // Küpür numarası en küçük olan pay alma kuponunu bul
@@ -78,13 +76,10 @@ public class HisseSenediServiceImpl implements HisseSenediService {
                     .orElseThrow(() -> new RuntimeException("Pay alma kuponu bulunamadı"));
 
             // Küpür numarasını kullanıldı olarak işaretle
-            enKucukKupon.setUsed(true);
-            kuponRepository.save(enKucukKupon);
+            kuponService.kuponKullan(enKucukKupon.getId());
 
             // Hisse senedine hissedarı set et
             hisseSenedi.setHissedar(hissedar);
-
-            // Kupon kullanıldı olarak işaretlencekk
 
             hisseSenediRepository.save(hisseSenedi);
         } else {

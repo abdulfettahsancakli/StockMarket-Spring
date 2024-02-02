@@ -10,4 +10,6 @@ public interface KuponService {
     List<Kupon> kuponOlustur(HisseSenedi hisseSenedi);
 
     List<Kupon> getKuponlarByHisseSenediId(Long hisseSenediId);
+
+    void kuponKullan(Long kuponId);
 }

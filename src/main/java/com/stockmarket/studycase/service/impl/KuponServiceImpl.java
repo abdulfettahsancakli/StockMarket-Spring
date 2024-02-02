@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class KuponServiceImpl implements KuponService {
@@ -37,5 +38,23 @@ public class KuponServiceImpl implements KuponService {
     @Override
     public List<Kupon> getKuponlarByHisseSenediId(Long hisseSenediId) {
         return kuponRepository.findByHisseSenediId(hisseSenediId);
+    }
+
+    @Override
+    public void kuponKullan(Long kuponId) {
+        Optional<Kupon> optionalKupon = kuponRepository.findById(kuponId);
+
+        if (optionalKupon.isPresent()) {
+            Kupon kupon = optionalKupon.get();
+
+            if (kupon.isUsed()) {
+                throw new RuntimeException("Kupon zaten kullanılmış");
+            }
+
+            kupon.setUsed(true);
+            kuponRepository.save(kupon);
+        } else {
+            throw new RuntimeException("Kupon bulunamadı");
+        }
     }
 }
