@@ -24,17 +24,9 @@ public class SermayeArtisi {
     @Column(name = "anlik_sermaye")
     private Double anlikSermaye;
 
-    /* @OneToMany(mappedBy = "sermayeArtisi") private List<Hisse> hisseler;  */
-
     @ManyToOne
     @JoinColumn(name = "tertip_id")
     private Tertip tertip;
-
-
-    // İlişki: Bir sermaye artışına ait birden çok kar payı dağıtımı
-    // Bu liste, her bir sermaye artışına ait birden fazla kar payı dağıtımını temsil eder
-    //@OneToMany(mappedBy = "sermayeArtisi", cascade = CascadeType.ALL)
-    //private List<KarPayi> karPayilari;
 
     public Double getAnlıkSermaye() {
         return anlikSermaye + bedelliArtis + bedelsizArtis;

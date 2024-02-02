@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SermayeArtisiService {
-    List<SermayeArtisi> tumSermayeArtislariniGetir();
-    Optional<SermayeArtisi> sermayeArtisiBulById(Long id);
-    SermayeArtisi sermayeArtisiKaydet(SermayeArtisi sermayeArtisi);
-    SermayeArtisi sermayeArtisiGuncelle(SermayeArtisi sermayeArtisi);
-    void sermayeArtisiSil(Long id);
+    List<SermayeArtisi> TumSermayeArtislari();
+
+    SermayeArtisi IdyeGoreSermayeArtisi(Long id);
+
+    SermayeArtisi SermayeArtisiOlustur(Double bedelliArtis, Double bedelsizArtis, Double artisOrani, String tertipNo);
+
+    //Double eskiSermayeOgren(Long tertipId);
+
 }

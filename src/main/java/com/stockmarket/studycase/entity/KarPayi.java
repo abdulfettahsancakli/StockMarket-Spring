@@ -20,7 +20,4 @@ public class KarPayi {
     @JoinColumn(name = "tertip_id")
     private Tertip tertip;
 
-    //@ManyToOne
-    //@JoinColumn(name = "sermaye_artisi_id")
-    //private SermayeArtisi sermayeArtisi;
 }
