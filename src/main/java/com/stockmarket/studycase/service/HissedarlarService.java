@@ -2,6 +2,7 @@ package com.stockmarket.studycase.service;
 
 
 import com.stockmarket.studycase.entity.Hissedarlar;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +14,7 @@ public interface HissedarlarService {
     void hissedarSil(Long id);
     List<Hissedarlar> listHissedarlar();
 
+    List<Hissedarlar> findByCriteria(Specification<Hissedarlar> specification);
 
 
 

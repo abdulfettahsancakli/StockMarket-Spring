@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface HissedarRepository extends JpaRepository<Hissedarlar, Long> {
+public interface HissedarRepository extends JpaRepository<Hissedarlar, Long>,JpaSpecificationExecutor<Hissedarlar> {
 
 }

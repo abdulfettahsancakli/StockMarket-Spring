@@ -91,4 +91,6 @@ public class HisseSenediServiceImpl implements HisseSenediService {
     public List<Kupon> HisseSenediKuponlariGetir(Long hisseSenediId) {
         return kuponService.getKuponlarByHisseSenediId(hisseSenediId);
     }
+
+
 }

@@ -3,7 +3,9 @@ package com.stockmarket.studycase.service.impl;
 import com.stockmarket.studycase.entity.Hissedarlar;
 import com.stockmarket.studycase.repository.HissedarRepository;
 import com.stockmarket.studycase.service.HissedarlarService;
+import com.stockmarket.studycase.specifications.HissedarlarSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +15,9 @@ public class HissedarlarServiceImpl implements HissedarlarService {
 
     @Autowired
     private HissedarRepository hissedarRepository;
+
+    @Autowired
+    private HissedarlarSpecification hissedarlarSpecification;
 
     @Override
     public Hissedarlar saveHissedar(Hissedarlar hissedar) {
@@ -48,6 +53,11 @@ public class HissedarlarServiceImpl implements HissedarlarService {
     @Override
     public List<Hissedarlar> listHissedarlar() {
         return hissedarRepository.findAll();
+    }
+
+    @Override
+    public List<Hissedarlar> findByCriteria(Specification<Hissedarlar> specification) {
+        return hissedarRepository.findAll(specification);
     }
 
 
