@@ -3,7 +3,6 @@ package com.stockmarket.studycase.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.Year;
 import java.util.List;
 @Data
 @Entity

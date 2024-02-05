@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class HissedarAddModel {
+public class HissedarUpdateModel {
 
     @Nonnull
-    private Long id;
+    private Long hissedar_id;
 
     @Nonnull
     private String unvan;

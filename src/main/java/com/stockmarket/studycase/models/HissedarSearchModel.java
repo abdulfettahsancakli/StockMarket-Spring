@@ -9,23 +9,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class OrtakSearchModel {
+public class HissedarSearchModel {
 
-    @Nonnull
+
     private Long id;
-
-    @Nonnull
     private String unvan;
-
-    @Nonnull
     private String adres;
-
-    @Nonnull
     private YatirimciTipi yatirimciTipi;
-
-    @Nonnull
     private String telefon;
-
-    @Nonnull
-    private String sicilNumarasi;
+    private String hissedarSicilNumarasi;
 }

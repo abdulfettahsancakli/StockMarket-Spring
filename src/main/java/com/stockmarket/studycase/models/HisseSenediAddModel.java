@@ -16,8 +16,8 @@ public class HisseSenediAddModel {
     private Long bitisSeriNumarasi;
 
     @Nonnull
-    private String ortakRef;
+    private String hissedarId;
 
     @Nonnull
-    private String tertipRef;
+    private String tertipId;
 }

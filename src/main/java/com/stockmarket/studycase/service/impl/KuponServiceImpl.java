@@ -2,9 +2,11 @@ package com.stockmarket.studycase.service.impl;
 
 import com.stockmarket.studycase.entity.HisseSenedi;
 import com.stockmarket.studycase.entity.Kupon;
+import com.stockmarket.studycase.entity.Tertip;
 import com.stockmarket.studycase.enums.KuponTuru;
 import com.stockmarket.studycase.repository.KuponRepository;
 import com.stockmarket.studycase.service.KuponService;
+import com.stockmarket.studycase.specifications.KuponSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -14,8 +16,15 @@ import java.util.Optional;
 @Service
 public class KuponServiceImpl implements KuponService {
 
-    @Autowired
-    private KuponRepository kuponRepository;
+
+    private final KuponRepository kuponRepository;
+    private final KuponSpecification kuponSpecification;
+
+    public KuponServiceImpl(@Autowired KuponRepository kuponRepository,
+                            @Autowired KuponSpecification kuponSpecification) {
+        this.kuponRepository = kuponRepository;
+        this.kuponSpecification = kuponSpecification;
+    }
 
     @Override
     public List<Kupon> kuponOlustur(HisseSenedi hisseSenedi) {
@@ -57,4 +66,22 @@ public class KuponServiceImpl implements KuponService {
             throw new RuntimeException("Kupon bulunamadı");
         }
     }
+
+    @Override
+    public void addKuponList(List<Kupon> kuponList) {
+        kuponRepository.saveAll(kuponList);
+    }
+
+    @Override
+    public void updateKuponList(List<Kupon> kuponList) {
+        kuponRepository.updateAll(kuponList);
+    }
+
+    @Override
+    public List<Kupon> searchPayAlmaKuponuByTertip(Tertip tertip) {
+        return kuponRepository.findAll(kuponSpecification.searchPayAlmaKuponuByTertipNo(tertip.getTertipNo()));
+    }
+
+
+
 }

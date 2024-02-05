@@ -1,7 +1,9 @@
 package com.stockmarket.studycase.controller;
 
 import com.stockmarket.studycase.entity.HisseSenedi;
+import com.stockmarket.studycase.entity.Hissedarlar;
 import com.stockmarket.studycase.entity.Kupon;
+import com.stockmarket.studycase.entity.Tertip;
 import com.stockmarket.studycase.service.HisseSenediService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,14 +24,14 @@ public class HisseSenediController {
 
     @PostMapping("/olustur")
     public ResponseEntity<HisseSenedi> HisseSenediOluştur
-            ( @RequestParam Long hissedarId, @RequestParam Long tertipId, @RequestParam Double nominalDeger)
+            (@RequestParam Hissedarlar hissedarId, @RequestParam Long tertipId, @RequestParam Double nominalDeger)
     {
         // RequestParam ile gelen değerlerim
         logger.info("hissedarId: {}, tertipId: {}, nominalDeger: {}", hissedarId, tertipId, nominalDeger);
         HisseSenedi HisseSenediOlustur = hisseSenediService.HisseSenediOlustur(hissedarId, tertipId, nominalDeger);
         return ResponseEntity.ok(HisseSenediOlustur);
     }
-
+    /*
     @PostMapping("/ver")
     public ResponseEntity<Void> hisseSenediVer(
             @RequestParam Long hisseSenediId,
@@ -38,6 +40,7 @@ public class HisseSenediController {
         hisseSenediService.hisseSenediVer(hisseSenediId, hissedarId);
         return ResponseEntity.noContent().build();
     }
+    */
 
     @GetMapping("/{id}/kuponlar")
     public ResponseEntity<List<Kupon>> hisseSenediKuponlariGetir(@PathVariable Long id)

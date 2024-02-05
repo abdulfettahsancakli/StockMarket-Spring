@@ -29,6 +29,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(UniqueSicilException.class)
+    public ResponseEntity<String> handleUniqueSicilException(UniqueSicilException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
 
 
     static class ErrorResponse {

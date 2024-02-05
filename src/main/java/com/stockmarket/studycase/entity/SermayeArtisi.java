@@ -28,7 +28,4 @@ public class SermayeArtisi {
     @JoinColumn(name = "tertip_id")
     private Tertip tertip;
 
-    public Double getAnlıkSermaye() {
-        return anlikSermaye + bedelliArtis + bedelsizArtis;
-    }
 }

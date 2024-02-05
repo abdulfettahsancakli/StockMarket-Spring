@@ -1,6 +1,5 @@
 package com.stockmarket.studycase.service.impl;
 
-
 import com.stockmarket.studycase.entity.Tertip;
 import com.stockmarket.studycase.repository.TertipRepository;
 import com.stockmarket.studycase.service.TertipService;
@@ -10,36 +9,29 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.Year;
 import java.util.UUID;
-
 @Service
 public class TertipServiceImpl implements TertipService {
 
     @Autowired
     private TertipRepository tertipRepository;
 
-   /* @Override
+   private static int tertipCounter = 0;
+
     public Tertip yeniTertipOlustur() {
+        String yeniTertipNo = generateTertipNo();
         Tertip yeniTertip = new Tertip();
-        yeniTertip.setTertipNo(generateUniqueTertipNo());
-        yeniTertip.setYil(calculateYear());
+        yeniTertip.setYil(String.valueOf(getCurrentYear()));
+        yeniTertip.setTertipNo(generateTertipNo());
+
         return tertipRepository.save(yeniTertip);
     }
-    */
-   @Override
-   public Tertip yeniTertipOlustur(String tertipNo) {
-       Tertip yeniTertip = new Tertip();
-       yeniTertip.setTertipNo(tertipNo);
-       yeniTertip.setYil("2024");
-       return tertipRepository.save(yeniTertip);
-   }
 
-    private String calculateYear() {
-        return "2024";
+    private String generateTertipNo() {
+        return "T" + (++tertipCounter);
     }
 
-    private String generateUniqueTertipNo() {
-        return "TERTIP_" + UUID.randomUUID().toString();
+    private int getCurrentYear() {
+        return java.time.Year.now().getValue();
     }
-
 
 }

@@ -1,10 +1,11 @@
 package com.stockmarket.studycase.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
-
+@Builder
 @Data
 @Entity
 public class HisseSenedi {
@@ -14,6 +15,7 @@ public class HisseSenedi {
     private Integer seriNumarasi;
     private Double nominalDeger;
     private Boolean hisseVerildiMi;
+
 
     @OneToMany(mappedBy = "hisseSenedi", cascade = CascadeType.ALL)
     private List<Kupon> kuponList;
@@ -26,17 +28,33 @@ public class HisseSenedi {
     @JoinColumn(name = "tertip_id")
     private Tertip tertip;
 
-    public void setHissedarId(Long hissedarId) {
-        if (this.hissedar == null) {
-            this.hissedar = new Hissedarlar();
-        }
-        this.hissedar.setId(hissedarId);
+    // Boş constructor
+    public HisseSenedi() {
+    }
+    @Builder
+    public HisseSenedi(Long id, Integer seriNumarasi, Double nominalDeger, Boolean hisseVerildiMi,
+                       List<Kupon> kuponList, Hissedarlar hissedar, Tertip tertip) {
+        this.id = id;
+        this.seriNumarasi = seriNumarasi;
+        this.nominalDeger = nominalDeger;
+        this.hisseVerildiMi = hisseVerildiMi;
+        this.kuponList = kuponList;
+        this.hissedar = hissedar;
+        this.tertip = tertip;
     }
 
-    public void setTertipId(Long tertipId) {
-        if (this.tertip == null) {
-            this.tertip = new Tertip();
-        }
-        this.tertip.setTertip_id(tertipId);
-    }
+   // public void setHissedarId(Long hissedarId) {
+   //     if (this.hissedar == null) {
+   //         this.hissedar = new Hissedarlar();
+   //     }
+   //     this.hissedar.setId(hissedarId);
+   // }
+
+   // public void setTertipId(Long tertipId) {
+   //     if (this.tertip == null) {
+   //         this.tertip = new Tertip();
+   //     }
+   //     this.tertip.setTertip_id(tertipId);
+   // }
+
 }

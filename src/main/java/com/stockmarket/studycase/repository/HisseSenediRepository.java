@@ -10,4 +10,10 @@ public interface HisseSenediRepository extends JpaRepository<HisseSenedi, Long> 
     @Query("SELECT hs FROM HisseSenedi hs WHERE hs.tertip.id = :tertipId ORDER BY hs.seriNumarasi ASC")
     HisseSenedi findFirstSenetByTertip(@Param("tertipId") Long tertipId);
 
+
+    @Query("SELECT MAX(hs.seriNumarasi) FROM HisseSenedi hs WHERE hs.tertip.id = :tertipId")
+    Integer findMaxSeriNumarasiByTertipId(@Param("tertipId") Long tertipId);
+
+
 }
+

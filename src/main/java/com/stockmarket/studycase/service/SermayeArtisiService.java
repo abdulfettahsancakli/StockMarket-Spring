@@ -10,8 +10,8 @@ public interface SermayeArtisiService {
 
     SermayeArtisi IdyeGoreSermayeArtisi(Long id);
 
-    SermayeArtisi SermayeArtisiOlustur(Double bedelliArtis, Double bedelsizArtis, Double artisOrani, String tertipNo);
+    SermayeArtisi SermayeArtisiOlustur(Double bedelliArtis, Double bedelsizArtis, Double artisOrani, Double eskiSermaye);
 
-    //Double eskiSermayeOgren(Long tertipId);
-
+    List<SermayeArtisi> searchSermayeArtisiByTertip(String tertipNo);
 }
+

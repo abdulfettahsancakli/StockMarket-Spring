@@ -31,15 +31,20 @@ public class SermayeArtisiController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    @GetMapping("/search-by-tertip/{tertipNo}")
+    public List<SermayeArtisi> searchSermayeArtisiByTertip(@PathVariable String tertipNo) {
+        return sermayeArtisiService.searchSermayeArtisiByTertip(tertipNo);
+    }
 
     @PostMapping("/olustur")
     public ResponseEntity<SermayeArtisi> createSermayeArtisi(
             @RequestParam Double bedelliArtis,
             @RequestParam Double bedelsizArtis,
             @RequestParam Double artisOrani,
-            @RequestParam String tertipNo)
+            @RequestParam Double eskiSermaye
+            )
     {
-        SermayeArtisi SermayeArtisiOlustur = sermayeArtisiService.SermayeArtisiOlustur(bedelliArtis, bedelsizArtis, artisOrani, tertipNo);
+        SermayeArtisi SermayeArtisiOlustur = sermayeArtisiService.SermayeArtisiOlustur(bedelliArtis, bedelsizArtis, artisOrani, eskiSermaye);
         return new ResponseEntity<>(SermayeArtisiOlustur, HttpStatus.CREATED);
     }
 }
