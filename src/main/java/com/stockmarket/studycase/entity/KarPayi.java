@@ -11,7 +11,6 @@ public class KarPayi {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Double dagitimOrani;
     private Integer dagitimYili;
     private Integer yilIcindeSeri;

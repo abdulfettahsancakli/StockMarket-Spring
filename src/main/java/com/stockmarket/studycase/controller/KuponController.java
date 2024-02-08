@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/kupon")
+@RequestMapping("/kupon")
 public class KuponController {
 
     @Autowired
@@ -23,7 +23,7 @@ public class KuponController {
         return new ResponseEntity<>(kuponlar, HttpStatus.CREATED);
     }
 
-    @GetMapping("/hisse-senedi/{hisseSenediId}")
+    @GetMapping("/{hisseSenediId}")
     public ResponseEntity<List<Kupon>> getKuponlarByHisseSenediId(@PathVariable Long hisseSenediId) {
         List<Kupon> kuponlar = kuponService.getKuponlarByHisseSenediId(hisseSenediId);
         return new ResponseEntity<>(kuponlar, HttpStatus.OK);

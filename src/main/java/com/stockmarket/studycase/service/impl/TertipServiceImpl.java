@@ -15,13 +15,13 @@ public class TertipServiceImpl implements TertipService {
     @Autowired
     private TertipRepository tertipRepository;
 
-   private static int tertipCounter = 0;
+    private static int tertipCounter = 0;
 
     public Tertip yeniTertipOlustur() {
         String yeniTertipNo = generateTertipNo();
         Tertip yeniTertip = new Tertip();
         yeniTertip.setYil(String.valueOf(getCurrentYear()));
-        yeniTertip.setTertipNo(generateTertipNo());
+        yeniTertip.setTertipNo(yeniTertipNo);
 
         return tertipRepository.save(yeniTertip);
     }

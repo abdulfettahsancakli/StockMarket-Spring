@@ -8,6 +8,7 @@ import com.stockmarket.studycase.repository.KuponRepository;
 import com.stockmarket.studycase.service.KuponService;
 import com.stockmarket.studycase.specifications.KuponSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,14 +31,25 @@ public class KuponServiceImpl implements KuponService {
     public List<Kupon> kuponOlustur(HisseSenedi hisseSenedi) {
         List<Kupon> kuponList = new ArrayList<>();
 
+        // Tertip yılını ve kar payı kuponlarının başlangıç yılını al
+        int baslangicYili = Integer.parseInt(hisseSenedi.getTertip().getYil());
+
         for (int i = 1; i <= 26; i++) {
             Kupon kupon = new Kupon();
             kupon.setUsed(false);
-            kupon.setYil(2024);
-            kupon.setKuponTuru((i <= 16) ? KuponTuru.PAY_ALMA : KuponTuru.KAR_PAYI);
-            kupon.setKupon_no(i);
-            kupon.setKupur_no((i <= 16) ? i : null);
             kupon.setHisseSenedi(hisseSenedi);
+            kupon.setKupon_no(i);
+            kupon.setKuponTuru((i <= 16) ? KuponTuru.PAY_ALMA : KuponTuru.KAR_PAYI);
+            kupon.setKupur_no((i <= 16) ? i : null);
+            if (i <= 16) {
+                kupon.setKupur_no(i);
+                // Küpür numarası olan kuponların yılını tertip yılı olarak ayarladan null olarak değiştir
+                //kupon.setYil(null);
+            } else {
+                // Kar payı kuponları için yıl değerlerini artarak belirle
+                kupon.setYil(baslangicYili++);
+            }
+
             kuponList.add(kupon);
         }
 
@@ -67,21 +79,26 @@ public class KuponServiceImpl implements KuponService {
         }
     }
 
+
+    @Override
+    public Specification<Kupon> searchPayAlmaKuponuBySenet(HisseSenedi hisseSenedi) {
+        return searchPayAlmaKuponuBySenet(hisseSenedi);
+    }
+
     @Override
     public void addKuponList(List<Kupon> kuponList) {
         kuponRepository.saveAll(kuponList);
     }
 
-    @Override
-    public void updateKuponList(List<Kupon> kuponList) {
-        kuponRepository.updateAll(kuponList);
-    }
+    // @Override
+    // public void updateKuponList(List<Kupon> kuponList) {
+    //    kuponRepository.updateAll(kuponList);
+    // }
 
-    @Override
-    public List<Kupon> searchPayAlmaKuponuByTertip(Tertip tertip) {
-        return kuponRepository.findAll(kuponSpecification.searchPayAlmaKuponuByTertipNo(tertip.getTertipNo()));
-    }
-
+    //@Override
+    //public List<Kupon> searchPayAlmaKuponuByTertip(Tertip tertip) {
+    //    return kuponRepository.findAll(kuponSpecification.searchPayAlmaKuponuByTertipNo(tertip.getTertipNo()));
+    //}
 
 
 }

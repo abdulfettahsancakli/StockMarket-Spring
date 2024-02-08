@@ -8,16 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@OpenAPIDefinition(
-		info = @Info(
-				title="Stock Market API",
-				description = "Stock Market OPEN API Documentation",
-				version = "3.2.2"),
-		servers = @Server(
-				url = "http://localhost:8080",
-				description = "Stock Market Api Url"
-		)
-)
+
 public class StudycaseApplication {
 
 	public static void main(String[] args) {

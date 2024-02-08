@@ -3,6 +3,7 @@ package com.stockmarket.studycase.controller;
 import com.stockmarket.studycase.entity.KarPayi;
 import com.stockmarket.studycase.service.KarPayiService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,13 @@ public class KarPayiController {
 
     @Autowired
     private KarPayiService karPayiService;
+
+    @PostMapping("/dagit")
+    public ResponseEntity<String> karPayiDagit(@RequestParam Long tertipId, @RequestParam Double dagitimOrani,
+                                               @RequestParam Integer dagitimYili) {
+        karPayiService.karPayiDagit(tertipId, dagitimOrani, dagitimYili);
+        return new ResponseEntity<>("Kar payı dağıtımı başarıyla gerçekleştirildi.", HttpStatus.OK);
+    }
 
     @GetMapping
     public ResponseEntity<List<KarPayi>> tumKarPaylariGetir() {

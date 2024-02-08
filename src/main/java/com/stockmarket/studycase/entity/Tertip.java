@@ -17,4 +17,14 @@ public class Tertip {
     // Her tertibe ait senetleri takip etmek için OneToMany ilişkisi
     @OneToMany(mappedBy = "tertip", cascade = CascadeType.ALL)
     private List<HisseSenedi> hisseSenediList;
+
+
+    @Override
+    public String toString() {
+        return "Tertip{" +
+                "tertip_id=" + tertip_id +
+                ", tertipNo='" + tertipNo + '\'' +
+                ", yil='" + yil + '\'' +
+                '}';
+    }
 }

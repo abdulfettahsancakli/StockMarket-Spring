@@ -14,11 +14,11 @@ import java.util.UUID;
 
 @Component
 public class KarPayıSpecification {
-    public Specification<KarPayi> searchKarPayiDagitimiByTertip(String tertipRef) {
+    public Specification<KarPayi> searchKarPayiDagitimiByTertip(String tertipId) {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
-            if (tertipRef != null) {
-                predicates.add(criteriaBuilder.equal(root.join(KarPayi_.tertip).get(Tertip_.TERTIP_ID), UUID.fromString(tertipRef)));
+            if (tertipId != null) {
+                predicates.add(criteriaBuilder.equal(root.join(KarPayi_.tertip).get(Tertip_.TERTIP_ID), UUID.fromString(tertipId)));
             }
             query.orderBy(criteriaBuilder.desc(root.get(KarPayi_.id)));
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
@@ -27,7 +27,7 @@ public class KarPayıSpecification {
 
     public Specification<KarPayi> searchKarPayiDagitimiByTertipandYil(Tertip tertip, Integer yil){
         return(root, query, criteriaBuilder) -> {
-            List<jakarta.persistence.criteria.Predicate> predicates = new ArrayList<>();
+            List<Predicate> predicates = new ArrayList<>();
             predicates.add(criteriaBuilder.equal(root.get(KarPayi_.TERTIP),tertip));
             predicates.add(criteriaBuilder.equal(root.get(KarPayi_.DAGITIM_YILI),yil));
             query.orderBy(criteriaBuilder.desc(root.get(KarPayi_.id)));

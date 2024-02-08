@@ -42,19 +42,14 @@ public class HisseSenedi {
         this.hissedar = hissedar;
         this.tertip = tertip;
     }
-
-   // public void setHissedarId(Long hissedarId) {
-   //     if (this.hissedar == null) {
-   //         this.hissedar = new Hissedarlar();
-   //     }
-   //     this.hissedar.setId(hissedarId);
-   // }
-
-   // public void setTertipId(Long tertipId) {
-   //     if (this.tertip == null) {
-   //         this.tertip = new Tertip();
-   //     }
-   //     this.tertip.setTertip_id(tertipId);
-   // }
+    @Override
+    public String toString() {
+        return "HisseSenedi{" +
+                "id=" + id +
+                ", seriNumarasi=" + seriNumarasi +
+                ", nominalDeger=" + nominalDeger +
+                ", hisseVerildiMi=" + hisseVerildiMi +
+                '}';
+    }
 
 }
