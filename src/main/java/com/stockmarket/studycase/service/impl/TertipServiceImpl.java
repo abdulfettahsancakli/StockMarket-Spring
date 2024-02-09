@@ -26,8 +26,16 @@ public class TertipServiceImpl implements TertipService {
         return tertipRepository.save(yeniTertip);
     }
 
+    /* private String generateTertipNo() {
+       return "T" + (++tertipCounter);
+    }
+    */
+
     private String generateTertipNo() {
-        return "T" + (++tertipCounter);
+        // UUID kullanarak benzersiz bir id oluştur
+        UUID uuid = UUID.randomUUID();
+        String uuidString = uuid.toString().replace("-", "").substring(0, 8);
+        return "T" + uuidString;
     }
 
     private int getCurrentYear() {

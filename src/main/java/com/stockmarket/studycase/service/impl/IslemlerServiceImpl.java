@@ -9,9 +9,10 @@ import com.stockmarket.studycase.repository.IslemlerRepository;
 import com.stockmarket.studycase.service.*;
 import com.stockmarket.studycase.specifications.IslemlerSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class IslemlerServiceImpl implements IslemlerService {
 
 

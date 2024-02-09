@@ -29,7 +29,6 @@ public class HissedarlarController {
         this.hissedarlarService = hissedarlarService;
     }
 
-
     @Operation(
             summary = "GET operations on hissedarlar by using hissedar id",
             description = "It is used to retrive hissedar object in database using hissedar id"
@@ -67,10 +66,6 @@ public class HissedarlarController {
         return ResponseEntity.ok(hissedar);
     }
 
-    // @GetMapping("/search")
-    // public List<Hissedarlar> searchHissedarlarByCriteria(@RequestBody HissedarSearchModel hissedarSearchModel) {
-    //    return hissedarlarService.listHissedarlarBySearch(hissedarSearchModel); }
-
     @GetMapping("/search")
     public List<Hissedarlar> searchHissedarlarByCriteria(
             @RequestParam(required = false) String unvan,
@@ -83,8 +78,6 @@ public class HissedarlarController {
         searchModel.setYatirimciTipi(YatirimciTipi.valueOf(yatirimciTipi));
         searchModel.setTelefon(telefon);
         searchModel.setHissedarSicilNumarasi(hissedarSicilNumarasi);
-
-        System.out.println(searchModel);
 
         return hissedarlarService.listHissedarlarBySearch(searchModel);
     }

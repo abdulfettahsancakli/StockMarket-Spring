@@ -43,7 +43,7 @@ public class SermayeArtisiServiceImpl implements SermayeArtisiService {
     @Override
     public SermayeArtisi SermayeArtisiOlustur(Double bedelliArtis, Double bedelsizArtis, Double artisOrani, Double eskiSermaye) {
 
-        // Yeni tertip oluştur veya mevcut tertibi getir
+        // Yeni tertip oluştur
         Tertip tertip = tertipService.yeniTertipOlustur();
 
         // Yeni sermaye artısı nesnesini oluştur ve kaydet
@@ -63,38 +63,5 @@ public class SermayeArtisiServiceImpl implements SermayeArtisiService {
         Specification<SermayeArtisi> spec = sermayeArtisiSpecification.searchSermayeArtisiByTertip(tertipNo);
         return sermayeArtisiRepository.findAll(spec);
     }
-
-/*
-     @Override
-     public SermayeArtisi SermayeArtisiOlustur(Double bedelliArtis, Double bedelsizArtis, Double artisOrani, String tertipNo) {
-        Tertip tertip = tertipService.yeniTertipOlustur(tertipNo);
-        Double eskiSermaye = 0.0; // Eski sermaye değerini belirle
-        Double yeniSermaye = eskiSermaye + bedelliArtis + bedelsizArtis;
-        SermayeArtisi sermayeArtisi = new SermayeArtisi();
-        sermayeArtisi.setBedelliArtis(bedelliArtis);
-        sermayeArtisi.setBedelsizArtis(bedelsizArtis);
-        sermayeArtisi.setArtisOrani(artisOrani);
-        sermayeArtisi.setAnlikSermaye(yeniSermaye);
-        sermayeArtisi.setTertip(tertip);
-        return sermayeArtisiRepository.save(sermayeArtisi);
-    }
-*/
-    //Override
-    //public Double eskiSermayeOgren(Long tertipId) {
-    //   // Veritabanından daha önce kaydedilmiş sermaye artışlarını getir
-    //   List<SermayeArtisi> gecmisSermayeArtislari = sermayeArtisiRepository.findByTertipId(tertipId);
-    //
-    //   System.out.println(gecmisSermayeArtislari);
-    //
-    //   // Eğer daha önce sermaye artışı yapılmışsa, en sonuncusunun anlık sermaye değerini al
-    //   if (!gecmisSermayeArtislari.isEmpty()) {
-    //       SermayeArtisi sonSermayeArtisi = gecmisSermayeArtislari.get(gecmisSermayeArtislari.size() - 1);
-    //       return sonSermayeArtisi.getAnlıkSermaye();
-    //   }
-    //
-    //   // Eğer daha önce sermaye artışı yapılmamışsa, varsayılan olarak 0.0 dön
-    //   return 0.0;
-    //
-
 
 }

@@ -9,8 +9,8 @@ import com.stockmarket.studycase.models.HisseSenediOlusturModel;
 import java.util.List;
 
 public interface HisseSenediService {
-    HisseSenedi HisseSenediOlustur(Long tertipId, Double nominalDeger);
+
     void hisseSenediVer(Long hisseSenediId, Long hissedarId);
     List<Kupon> HisseSenediKuponlariGetir(Long hisseSenediId);
-    HisseSenedi SenetOlustur(List<HisseSenediOlusturModel> senetBilgileri, Long tertipId);
+    HisseSenedi HisseSenediOlustur(List<HisseSenediOlusturModel> senetBilgileri, Long tertipId);
 }

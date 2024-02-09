@@ -2,21 +2,18 @@ package com.stockmarket.studycase.service.impl;
 
 import com.stockmarket.studycase.entity.*;
 import com.stockmarket.studycase.enums.IslemTipi;
-import com.stockmarket.studycase.enums.KuponTuru;
 import com.stockmarket.studycase.models.HisseSenediOlusturModel;
 import com.stockmarket.studycase.repository.*;
 import com.stockmarket.studycase.service.HisseSenediService;
 import com.stockmarket.studycase.service.KuponService;
 import com.stockmarket.studycase.specifications.KuponSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,44 +31,10 @@ public class HisseSenediServiceImpl implements HisseSenediService {
     private KuponService kuponService;
 
     @Autowired
-    private KuponSpecification kuponSpecification;
-
-    @Autowired
     private KuponRepository kuponRepository;
 
     @Autowired
     private IslemlerRepository islemlerRepository;
-
-
-    @Override
-    public HisseSenedi HisseSenediOlustur(Long tertipId, Double nominalDeger) {
-        return null;
-    }
-
-    /*
-            @Override
-            public HisseSenedi HisseSenediOlustur(Long tertipId, Double nominalDeger) {
-                Tertip tertip = tertipRepository.findById(tertipId).orElseThrow(() -> new RuntimeException("Tertip bulunamadı"));
-
-                // Tertipin en yüksek seri numarasını al
-                Integer enYuksekSeriNumarasi = hisseSenediRepository.findMaxSeriNumarasiByTertipId(tertipId);
-
-                HisseSenedi hisseSenedi = new HisseSenedi();
-                // Yeni senetin seri numarasını belirle
-                hisseSenedi.setSeriNumarasi(enYuksekSeriNumarasi != null ? enYuksekSeriNumarasi + 1 : 1);
-                hisseSenedi.setTertip(tertip);
-                hisseSenedi.setNominalDeger(nominalDeger);
-
-
-                hisseSenedi = hisseSenediRepository.save(hisseSenedi);
-
-                // Hisse senedine bağlı kuponları oluştur
-                List<Kupon> kuponlar = kuponService.kuponOlustur(hisseSenedi);
-                hisseSenedi.setKuponList(kuponlar);
-
-                return hisseSenediRepository.save(hisseSenedi);
-            }
-        */
 
     @Override
     public void hisseSenediVer(Long hisseSenediId, Long hissedarId) {
@@ -136,9 +99,8 @@ public class HisseSenediServiceImpl implements HisseSenediService {
         return kuponService.getKuponlarByHisseSenediId(hisseSenediId);
     }
 
-
-    // Metodunuzu güncelleyin
-    public HisseSenedi SenetOlustur(List<HisseSenediOlusturModel> senetBilgileri, Long tertipId) {
+    @Override
+    public HisseSenedi HisseSenediOlustur(List<HisseSenediOlusturModel> senetBilgileri, Long tertipId) {
         Tertip tertip = tertipRepository.findById(tertipId)
                 .orElseThrow(() -> new RuntimeException("Tertip bulunamadı"));
 
@@ -171,6 +133,5 @@ public class HisseSenediServiceImpl implements HisseSenediService {
         // En son oluşturulan hisse senedini döndür
         return hisseSenediRepository.findById(Long.valueOf(enYuksekSeriNumarasi)).orElseThrow(() -> new RuntimeException("Hisse senedi oluşturulamadı"));
     }
-
 
 }

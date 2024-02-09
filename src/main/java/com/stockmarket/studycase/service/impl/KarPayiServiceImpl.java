@@ -6,10 +6,7 @@ import com.stockmarket.studycase.enums.IslemTipi;
 import com.stockmarket.studycase.enums.KuponTuru;
 import com.stockmarket.studycase.enums.converters.IslemTipiConverter;
 import com.stockmarket.studycase.models.KarPayiRequest;
-import com.stockmarket.studycase.repository.HisseSenediRepository;
-import com.stockmarket.studycase.repository.KarPayiRepository;
-import com.stockmarket.studycase.repository.KuponRepository;
-import com.stockmarket.studycase.repository.TertipRepository;
+import com.stockmarket.studycase.repository.*;
 import com.stockmarket.studycase.service.KarPayiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +30,8 @@ public class KarPayiServiceImpl implements KarPayiService {
     @Autowired
     private KuponRepository kuponRepository;
 
-
+    @Autowired
+    private IslemlerRepository islemlerRepository;
 
     @Override
     public void karPayiDagit(Long tertipId, Double dagitimOrani, Integer dagitimYili) {
@@ -83,6 +81,8 @@ public class KarPayiServiceImpl implements KarPayiService {
                     islem.setIslem_zamani(LocalDateTime.now());
                     islem.setKarpayiDonemi(null);
                     islem.setKarpayi_tutari(karPayi.getDagitimOrani() * hisseSenedi.getNominalDeger());
+
+                    islemlerRepository.save(islem);
 
                     break;
                 }

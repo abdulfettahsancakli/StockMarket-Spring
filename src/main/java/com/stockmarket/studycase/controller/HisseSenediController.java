@@ -26,39 +26,21 @@ public class HisseSenediController {
     @Autowired
     private HisseSenediService hisseSenediService;
 
-    @PostMapping("/olustur")
-    public ResponseEntity<HisseSenedi> HisseSenediOluştur
-            (@RequestParam Long tertipId, @RequestParam Double nominalDeger)
-    {
-        // RequestParam ile gelen değerlerim
-        logger.info("tertipId: {}, nominalDeger: {}", tertipId, nominalDeger);
-        HisseSenedi HisseSenediOlustur = hisseSenediService.HisseSenediOlustur(tertipId, nominalDeger);
-        return ResponseEntity.ok(HisseSenediOlustur);
-    }
-
-  /*  @PostMapping("/createHisseSenedi")
-    public ResponseEntity<HisseSenedi> createHisseSenedi(@RequestBody List<HisseSenediOlusturModel> senetBilgileri, @RequestParam Long tertipId) {
-        HisseSenedi hisseSenedi = hisseSenediService.SenetOlustur(senetBilgileri, tertipId);
-        return new ResponseEntity<>(hisseSenedi, HttpStatus.CREATED);
-    }
-   */
-
-    @PostMapping("/createHisseSenedi")
-    public ResponseEntity<HisseSenedi> createHisseSenedi(@RequestBody HisseSenediRequest request) {
-        HisseSenedi hisseSenedi = hisseSenediService.SenetOlustur(request.getSenetler(), request.getTertipId());
+    @PostMapping("/hisse-senedi-olustur")
+    public ResponseEntity<HisseSenedi> HisseSenediOluştur(@RequestBody HisseSenediRequest request) {
+        HisseSenedi hisseSenedi = hisseSenediService.HisseSenediOlustur(request.getSenetler(), request.getTertipId());
         return new ResponseEntity<>(hisseSenedi, HttpStatus.CREATED);
     }
 
-    @PostMapping("/ver")
-    public ResponseEntity<Void> hisseSenediVer(
+    @PostMapping("/hisse-senedi-ver")
+    public ResponseEntity<String> hisseSenediVer(
             @RequestParam Long hisseSenediId,
             @RequestParam Long hissedarId)
     {
         hisseSenediService.hisseSenediVer(hisseSenediId, hissedarId);
-        return ResponseEntity.noContent().build();
+        String successMessage = "Hisse Senedi verme işlemi başarıyla gerçekleştirildi.";
+        return ResponseEntity.ok().body(successMessage);
     }
-
-
 
     @GetMapping("/{id}/kuponlar")
     public ResponseEntity<List<Kupon>> hisseSenediKuponlariGetir(@PathVariable Long id)
