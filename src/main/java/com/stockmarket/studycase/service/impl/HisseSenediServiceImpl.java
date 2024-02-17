@@ -2,11 +2,11 @@ package com.stockmarket.studycase.service.impl;
 
 import com.stockmarket.studycase.entity.*;
 import com.stockmarket.studycase.enums.IslemTipi;
+import com.stockmarket.studycase.exception.*;
 import com.stockmarket.studycase.models.HisseSenediOlusturModel;
 import com.stockmarket.studycase.repository.*;
 import com.stockmarket.studycase.service.HisseSenediService;
 import com.stockmarket.studycase.service.KuponService;
-import com.stockmarket.studycase.specifications.KuponSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,6 +39,7 @@ public class HisseSenediServiceImpl implements HisseSenediService {
 
     @Override
     public void hisseSenediVer(Long hisseSenediId, Long hissedarId) {
+
         // Girişlerin null olup olmadığını kontrol et
         if (hisseSenediId == null || hissedarId == null) {
             throw new IllegalArgumentException("Hisse senedi ID veya hissedar ID null olamaz");
@@ -45,28 +47,28 @@ public class HisseSenediServiceImpl implements HisseSenediService {
 
         // Hisse senedi ve hissedarı bul
         HisseSenedi hisseSenedi = hisseSenediRepository.findById(hisseSenediId)
-                .orElseThrow(() -> new IllegalArgumentException("Hisse senedi bulunamadı"));
+                .orElseThrow(() -> new HisseSenediNotFoundException("Hisse senedi bulunamadı"));
 
         Hissedarlar hissedar = hissedarRepository.findById(hissedarId)
-                .orElseThrow(() -> new IllegalArgumentException("Hissedar bulunamadı"));
+                .orElseThrow(() -> new HissedarNotFoundException("Hissedar bulunamadı"));
 
         // Hisse senedinin daha önce bir hissedara verilip verilmediğini kontrol et
         if (hisseSenedi.getHissedar() != null) {
-            throw new IllegalStateException("Hisse senedi zaten bir hissedara verilmiş");
+            throw new HisseSenediZatenVerilmisException("Hisse senedi zaten bir hissedara verilmiş");
         }
 
         List<Kupon> kuponlar = kuponRepository.findByHisseSenediId(hisseSenediId);
 
         // Null küpür numarasına sahip kuponları filtrele
-        List<Kupon> filteredKuponlar = kuponlar.stream()
+        List<Kupon> payAlmaKuponlar = kuponlar.stream()
                 .filter(kupon -> kupon.getKupur_no() != null)
                 .collect(Collectors.toList());
 
         // Küpür numarasına göre sırala
-        filteredKuponlar.sort(Comparator.comparing(Kupon::getKupur_no));
+        payAlmaKuponlar.sort(Comparator.comparing(Kupon::getKupur_no));
 
         // En küçük küpür numaralı kuponu seç
-        Kupon enKucukKupon = filteredKuponlar.get(0);
+        Kupon enKucukKupon = payAlmaKuponlar.get(0);
 
         // Küpür numarasını kullanıldı olarak işaretle
         enKucukKupon.setUsed(true);
@@ -85,12 +87,12 @@ public class HisseSenediServiceImpl implements HisseSenediService {
             islem.setIslemTipi(IslemTipi.HISSE_SENEDI);
             islem.setKupon(enKucukKupon); // Hangi kuponla yapıldığı bilgisini kupon olarak ayarla
             islem.setIslem_zamani(LocalDateTime.now());
-            islem.setKarpayiDonemi(null); // Hisse senedi verme işlemi olduğu için kar payı dönemi null olacak
+            islem.setKarpayiDonemi(null);// Hisse senedi verme işlemi olduğu için kar payı dönemi null olacak
             islem.setKarpayi_tutari(0); // Hisse senedi verme işleminde kar payı tutarı 0 olacak
 
             islemlerRepository.save(islem);
-        } catch (Exception e) {
-            throw new RuntimeException("Hisse senedi veya kupon kaydedilirken bir hata oluştu", e);
+        } catch (HisseSenediKuponNotSavedException e) {
+            throw new HisseSenediKuponNotSavedException("Hisse senedi veya kupon kaydedilirken bir hata oluştu", e);
         }
     }
 
@@ -102,8 +104,7 @@ public class HisseSenediServiceImpl implements HisseSenediService {
     @Override
     public HisseSenedi HisseSenediOlustur(List<HisseSenediOlusturModel> senetBilgileri, Long tertipId) {
         Tertip tertip = tertipRepository.findById(tertipId)
-                .orElseThrow(() -> new RuntimeException("Tertip bulunamadı"));
-
+                .orElseThrow(() -> new TertipNotFoundException("Tertip bulunamadı"));
 
         Integer enYuksekSeriNumarasi = hisseSenediRepository.findMaxSeriNumarasiByTertipId(tertipId);
         if (enYuksekSeriNumarasi == null) {
@@ -133,5 +134,8 @@ public class HisseSenediServiceImpl implements HisseSenediService {
         // En son oluşturulan hisse senedini döndür
         return hisseSenediRepository.findById(Long.valueOf(enYuksekSeriNumarasi)).orElseThrow(() -> new RuntimeException("Hisse senedi oluşturulamadı"));
     }
+
+
+
 
 }

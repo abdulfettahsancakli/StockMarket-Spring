@@ -37,7 +37,6 @@ public class HissedarlarSpecification {
                 predicates.add(criteriaBuilder.equal(root.get("sicilNumarasi"), hissedarSearchModel.getHissedarSicilNumarasi().trim()));
             }
 
-
          query.orderBy(criteriaBuilder.asc(root.get(Hissedarlar_.UNVAN)));
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };

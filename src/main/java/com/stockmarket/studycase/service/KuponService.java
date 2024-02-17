@@ -17,10 +17,5 @@ public interface KuponService {
 
     void kuponKullan(Long kuponId);
 
-    void addKuponList(List<Kupon> kuponList);
-
-    //void updateKuponList(List<Kupon> kuponList);
-
-    //List<Kupon> searchPayAlmaKuponuByTertip(Tertip tertip);
 
 }

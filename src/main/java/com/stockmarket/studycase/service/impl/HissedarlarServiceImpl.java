@@ -2,6 +2,7 @@ package com.stockmarket.studycase.service.impl;
 
 import com.stockmarket.studycase.entity.Hissedarlar;
 import com.stockmarket.studycase.enums.YatirimciTipi;
+import com.stockmarket.studycase.exception.HissedarNotFoundException;
 import com.stockmarket.studycase.exception.UniqueSicilException;
 import com.stockmarket.studycase.models.HissedarAddModel;
 import com.stockmarket.studycase.models.HissedarSearchModel;
@@ -9,8 +10,6 @@ import com.stockmarket.studycase.repository.HissedarRepository;
 import com.stockmarket.studycase.service.HissedarlarService;
 import com.stockmarket.studycase.specifications.HissedarlarSpecification;
 import com.stockmarket.studycase.util.StringUtils;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,8 +34,10 @@ public class HissedarlarServiceImpl implements HissedarlarService {
 
     @Override
     public Optional<Hissedarlar> HissedarBul_Id(Long id) {
-        return hissedarRepository.findById(id);
+        return Optional.ofNullable(hissedarRepository.findById(id)
+                .orElseThrow(() -> new HissedarNotFoundException(id + " ID numarasına ait hissedar bulunamadı")));
     }
+
 
     @Override
     public void hissedarSil(Long id) {
@@ -51,7 +52,7 @@ public class HissedarlarServiceImpl implements HissedarlarService {
     @Override
     public Hissedarlar hissedarEkle(HissedarAddModel hissedarAddModel) {
         if(checkUniqueSicil(hissedarAddModel.getHissedarSicilNumarasi())){
-            throw new UniqueSicilException("Bu sicil numarası ile kayıt mevcuttur");
+            throw new UniqueSicilException("Bu sicil numarası ile kayıt mevcuttur: " + hissedarAddModel.getHissedarSicilNumarasi());
          }
         Hissedarlar hissedar = Hissedarlar.builder()
                 .unvan(StringUtils.toUpperCaseTurkish(hissedarAddModel.getUnvan()))

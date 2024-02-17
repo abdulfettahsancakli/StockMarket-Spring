@@ -5,9 +5,11 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface KuponRepository extends JpaRepository<Kupon,Long> {
     List<Kupon> findByHisseSenediId(Long hisseSenediId);
-
     List<Kupon> findAll(Specification<Kupon> kuponSpecification);
+
+
 }

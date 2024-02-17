@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+
 @Data
 @Entity
 @Builder
@@ -23,9 +24,10 @@ public class Hissedarlar {
     @Column(unique = true, length = 8)
     private String sicilNumarasi;
 
-    public Hissedarlar(){
+    public Hissedarlar() {
 
     }
+
     public Hissedarlar(Long id, String unvan, String adres, String telefon, YatirimciTipi yatirimciTipi, String sicilNumarasi, List<HisseSenedi> hisseler) {
         this.id = id;
         this.unvan = unvan;
@@ -35,6 +37,7 @@ public class Hissedarlar {
         this.sicilNumarasi = sicilNumarasi;
         this.hisseler = hisseler;
     }
+
     @OneToMany(mappedBy = "hissedar")
     private List<HisseSenedi> hisseler;
 }

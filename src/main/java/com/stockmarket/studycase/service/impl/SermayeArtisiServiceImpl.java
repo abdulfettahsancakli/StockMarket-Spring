@@ -2,6 +2,8 @@ package com.stockmarket.studycase.service.impl;
 
 import com.stockmarket.studycase.entity.SermayeArtisi;
 import com.stockmarket.studycase.entity.Tertip;
+import com.stockmarket.studycase.exception.HissedarNotFoundException;
+import com.stockmarket.studycase.exception.SermayeArtisiNotFoundException;
 import com.stockmarket.studycase.repository.SermayeArtisiRepository;
 import com.stockmarket.studycase.service.SermayeArtisiService;
 import com.stockmarket.studycase.service.TertipService;
@@ -37,7 +39,7 @@ public class SermayeArtisiServiceImpl implements SermayeArtisiService {
 
     @Override
     public SermayeArtisi IdyeGoreSermayeArtisi(Long id) {
-        return sermayeArtisiRepository.findById(id).orElse(null);
+        return sermayeArtisiRepository.findById(id).orElseThrow(() -> new SermayeArtisiNotFoundException(id + " ID numarasına ait sermaye artışı bulunamadı"));
     }
 
     @Override

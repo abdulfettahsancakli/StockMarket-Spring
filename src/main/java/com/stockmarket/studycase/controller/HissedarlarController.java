@@ -63,7 +63,7 @@ public class HissedarlarController {
     @PostMapping("/ekle")
     public ResponseEntity<Hissedarlar> hissedarEkle(@RequestBody HissedarAddModel hissedarAddModel) {
         Hissedarlar hissedar = hissedarlarService.hissedarEkle(hissedarAddModel);
-        return ResponseEntity.ok(hissedar);
+        return ResponseEntity.ok().body(hissedar);
     }
 
     @GetMapping("/search")

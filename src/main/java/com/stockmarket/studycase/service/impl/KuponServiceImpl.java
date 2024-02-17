@@ -85,20 +85,7 @@ public class KuponServiceImpl implements KuponService {
         return searchPayAlmaKuponuBySenet(hisseSenedi);
     }
 
-    @Override
-    public void addKuponList(List<Kupon> kuponList) {
-        kuponRepository.saveAll(kuponList);
-    }
 
-    // @Override
-    // public void updateKuponList(List<Kupon> kuponList) {
-    //    kuponRepository.updateAll(kuponList);
-    // }
-
-    //@Override
-    //public List<Kupon> searchPayAlmaKuponuByTertip(Tertip tertip) {
-    //    return kuponRepository.findAll(kuponSpecification.searchPayAlmaKuponuByTertipNo(tertip.getTertipNo()));
-    //}
 
 
 }

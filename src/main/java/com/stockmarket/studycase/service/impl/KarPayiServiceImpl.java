@@ -5,6 +5,7 @@ import com.stockmarket.studycase.entity.*;
 import com.stockmarket.studycase.enums.IslemTipi;
 import com.stockmarket.studycase.enums.KuponTuru;
 import com.stockmarket.studycase.enums.converters.IslemTipiConverter;
+import com.stockmarket.studycase.exception.TertipNotFoundException;
 import com.stockmarket.studycase.models.KarPayiRequest;
 import com.stockmarket.studycase.repository.*;
 import com.stockmarket.studycase.service.KarPayiService;
@@ -35,9 +36,10 @@ public class KarPayiServiceImpl implements KarPayiService {
 
     @Override
     public void karPayiDagit(Long tertipId, Double dagitimOrani, Integer dagitimYili) {
+
         // Verilen tertip ID'sine sahip tertip var mı kontrol et
         Tertip tertip = tertipRepository.findById(tertipId)
-                .orElseThrow(() -> new IllegalArgumentException("Tertip bulunamadı: " + tertipId));
+                .orElseThrow(() -> new TertipNotFoundException("Tertip bulunamadı: " + tertipId));
 
         // Yıl içindeki seri numarasını belirle
         int yilIcindeSeri = karPayiRepository.findMaxSeriNumarasiByDagitimYili(dagitimYili) + 1;

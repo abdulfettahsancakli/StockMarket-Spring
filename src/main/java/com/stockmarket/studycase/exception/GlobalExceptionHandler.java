@@ -29,12 +29,52 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
+
     @ExceptionHandler(UniqueSicilException.class)
-    public ResponseEntity<String> handleUniqueSicilException(UniqueSicilException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    public ResponseEntity<Object> handleUniqueSicilException(UniqueSicilException exception) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(exception.getMessage());
     }
 
+    @ExceptionHandler({HissedarNotFoundException.class})
+    public ResponseEntity<Object> handleHissedarNotFoundException(HissedarNotFoundException exception) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(exception.getMessage());
+    }
 
+    @ExceptionHandler({HisseSenediKuponNotSavedException.class})
+    public ResponseEntity<Object> handleHisseSenediKuponNotSavedException(HisseSenediKuponNotSavedException exception) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(exception.getMessage());
+    }
+
+    @ExceptionHandler({HissedarAlreadyExistsException.class})
+    public ResponseEntity<Object> handleStudentAlreadyExistsException(HissedarAlreadyExistsException exception) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(exception.getMessage());
+    }
+    @ExceptionHandler({SermayeArtisiNotFoundException.class})
+    public ResponseEntity<Object> handleSermayeArtisiNotFoundException(SermayeArtisiNotFoundException exception) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(exception.getMessage());
+    }
+    @ExceptionHandler({TertipNotFoundException.class})
+    public ResponseEntity<Object> handleTertipNotFoundException(TertipNotFoundException exception) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(exception.getMessage());
+    }
+    @ExceptionHandler({HisseSenediNotFoundException.class})
+    public ResponseEntity<Object> HisseSenediNotFoundException(HisseSenediNotFoundException exception) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(exception.getMessage());
+    }
 
     static class ErrorResponse {
         private int status;
