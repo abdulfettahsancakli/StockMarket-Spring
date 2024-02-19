@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface HissedarRepository extends JpaRepository<Hissedarlar, Long>{
+public interface HissedarRepository extends JpaRepository<Hissedarlar, Long>,JpaSpecificationExecutor{
     List<Hissedarlar> findAllByOrderByUnvanAsc();
 
     Hissedarlar findBysicilNumarasi(String sicilNumarasi);
