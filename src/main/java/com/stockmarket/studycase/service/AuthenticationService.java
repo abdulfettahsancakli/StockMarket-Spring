@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 @Service
 public class AuthenticationService {
@@ -30,6 +31,12 @@ public class AuthenticationService {
     public RequestResponseModel register(UserRegisterModel SignUpRequest) {
         RequestResponseModel response = new RequestResponseModel();
         try {
+            Optional<User> existingUser = userRepository.findById(SignUpRequest.getId());
+            if (existingUser.isPresent()) {
+                response.setStatusCode(400);
+                response.setError("Bu kullanıcı zaten mevcut. Lütfen farklı bir kullanıcı adı seçin.");
+                return response;
+            }
             User user = new User();
             user.setId(SignUpRequest.getId());
             user.setFirstName(SignUpRequest.getFirstName());

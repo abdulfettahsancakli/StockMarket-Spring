@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -39,11 +40,12 @@ public class SecurityConfig {
 
         return http
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(
                         req -> req
-                                .requestMatchers("/login/**", "/register/**", "/refresh/**")
+                                .requestMatchers("/login/**", "/register/**", "/refresh/**","/password/reset")
                                 .permitAll()
-                                .requestMatchers("/admin_only/**").hasAuthority("ADMIN")
+                                .requestMatchers("api/sermaye-artisi/olustur").hasAuthority("ADMIN")
                                 .anyRequest()
                                 .authenticated()
                 )
@@ -53,10 +55,14 @@ public class SecurityConfig {
                         jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class
                 )
                 .exceptionHandling(
-                        e->e.accessDeniedHandler(
-                                        (request, response, accessDeniedException)->response.setStatus(403)
-                                )
-                                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
+                        e -> e.accessDeniedHandler((request, response, accessDeniedException) -> {
+                                    response.setStatus(HttpStatus.FORBIDDEN.value()); // 403 Forbidden
+                                    response.setContentType("application/json");
+                                    response.setCharacterEncoding("UTF-8");
+                                    response.getWriter().write("{\"message\": \"You are not authorized to access this resource.\"}");
+                                })
+                                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                )
                 .logout(l->l
                         .logoutUrl("/logout")
                         .addLogoutHandler(logoutHandler)
