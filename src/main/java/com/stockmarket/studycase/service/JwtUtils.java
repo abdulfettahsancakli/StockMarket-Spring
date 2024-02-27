@@ -25,8 +25,8 @@ public class JwtUtils {
     @Value("${security.jwt.secret}")
     private String SECRET_KEY;
 
-    private static final long EXPIRATION_TIME = 86400000;
-
+    private static final long ACCESS_TOKEN_EXPIRATION_TIME = 180000;
+    private static final long REFRESH_TOKEN_EXPIRATION_TIME = 86400000;
     private SecretKey getKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
@@ -36,7 +36,7 @@ public class JwtUtils {
         return Jwts.builder()
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .expiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION_TIME))
                 .signWith(getKey())
                 .compact();
     }
@@ -46,7 +46,7 @@ public class JwtUtils {
                 .claims(claims)
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .expiration(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRATION_TIME))
                 .signWith(getKey())
                 .compact();
     }
@@ -62,6 +62,12 @@ public class JwtUtils {
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+    public boolean isRefreshTokenValid(String refreshToken, UserDetails userDetails) {
+        // Kullanıcı adını al
+        final String username = extractUsername(refreshToken);
+        // Kullanıcı adıyla doğrulama yap
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(refreshToken));
     }
 
     public boolean isTokenExpired(String token) {

@@ -20,21 +20,25 @@ public class User implements UserDetails {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "first_name")
-    private String firstName;
-
-    @Column(name = "last_name")
-    private String lastName;
-
     @Column(name = "username")
     private String username;
 
     @Column(name = "password")
     private String password;
 
+    @Column(name = "email", unique = true)
+    private String email;
+
     @Convert(converter = RoleConverter.class)
     private Role role;
-    
+
+    @Column(name = "access_token")
+    private String accessToken;
+
+    @Column(name = "refresh_token")
+    private String refreshToken;
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));

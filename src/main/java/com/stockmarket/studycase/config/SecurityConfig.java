@@ -43,7 +43,7 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(
                         req -> req
-                                .requestMatchers("/login/**", "/register/**", "/refresh/**","/password/reset")
+                                .requestMatchers("/login/**", "/register/**", "/refresh/**","/forgot-password","/updateUser","/set-password")
                                 .permitAll()
                                 .requestMatchers("api/sermaye-artisi/olustur").hasAuthority("ADMIN")
                                 .anyRequest()

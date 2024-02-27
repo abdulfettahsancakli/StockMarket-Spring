@@ -1,6 +1,5 @@
 package com.stockmarket.studycase.models;
 
-
 import com.stockmarket.studycase.enums.Role;
 import jakarta.annotation.Nonnull;
 import lombok.AllArgsConstructor;
@@ -10,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class UserRegisterModel {
+public class UserUpdateModel {
 
     @Nonnull
     private Integer id;
@@ -19,7 +18,7 @@ public class UserRegisterModel {
     private String username;
 
     @Nonnull
-    private CharSequence password;
+    private String password;
 
     @Nonnull
     private String email;
