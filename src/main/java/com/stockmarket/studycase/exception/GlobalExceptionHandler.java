@@ -29,7 +29,6 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-
     @ExceptionHandler(UniqueSicilException.class)
     public ResponseEntity<Object> handleUniqueSicilException(UniqueSicilException exception) {
         return ResponseEntity
@@ -74,6 +73,29 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(exception.getMessage());
+    }
+
+    @ExceptionHandler(UserEmailNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<String> handleUserEmailNotFoundException(UserEmailNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(PasswordNotMatchException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<String> handlePasswordNotMatchException(PasswordNotMatchException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(NotSendMailException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<String> handleNotSendMailException(NotSendMailException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(IncorrectPasswordException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<String> handleIncorrectPasswordException(IncorrectPasswordException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     static class ErrorResponse {

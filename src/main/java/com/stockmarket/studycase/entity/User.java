@@ -3,7 +3,10 @@ import com.stockmarket.studycase.enums.Role;
 import com.stockmarket.studycase.enums.converters.RoleConverter;
 import com.stockmarket.studycase.enums.converters.YatirimciTipiConverter;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +14,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Data
 @Table(name = "users")
@@ -32,12 +38,8 @@ public class User implements UserDetails {
     @Convert(converter = RoleConverter.class)
     private Role role;
 
-    @Column(name = "access_token")
-    private String accessToken;
-
-    @Column(name = "refresh_token")
-    private String refreshToken;
-
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

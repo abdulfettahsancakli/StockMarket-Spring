@@ -9,12 +9,14 @@ import java.util.Optional;
 
 public interface TokenRepository extends JpaRepository<Token, Integer> {
 
-
-    @Query("""
-select t from Token t inner join User u on t.user.id = u.id
-where t.user.id = :userId and t.loggedOut = false
-""")
-    List<Token> findAllTokensByUser(Integer userId);
+    // Süresi dolmamış ve iptal edilmemiş olan
+    // Tüm tokenları belirli bir kullanıcıya ait olanları bulur.
+    @Query(value = """
+      select t from Token t inner join User u\s
+      on t.user.id = u.id\s
+      where u.id = :id and (t.expired = false or t.revoked = false)\s
+      """)
+    List<Token> findAllValidTokenByUser(Integer id);
 
     Optional<Token> findByToken(String token);
 }
